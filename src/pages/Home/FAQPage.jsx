@@ -28,7 +28,7 @@ const FAQPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center py-16 px-4">
+    <div className="min-h-screen flex flex-col items-center py-16 px-4">
       <div className="max-w-3xl w-full text-center mb-10">
         <h1 className="text-3xl font-bold mb-3">Frequently Asked Questions (FAQ)</h1>
         <p className="text-gray-600">Enhance posture, mobility, and well-being effortlessly with Posture Pro. Achieve proper alignment, reduce pain, and strengthen your body with ease!</p>
