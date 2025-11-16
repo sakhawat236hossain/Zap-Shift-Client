@@ -1,6 +1,7 @@
 import React from "react";
+import { motion } from "framer-motion";
 import service from "../../assets/service.png";
-import "../../index.css";
+import '../../index.css';
 
 const services = [
   {
@@ -40,7 +41,9 @@ const OurServices = () => {
     <section className="py-15 px-15 bg-[#03373D] rounded-2xl max-w-[1200px] mx-auto">
       {/* TITLE */}
       <div className="text-center mb-12 text-white">
-        <h1 className="text-3xl md:text-4xl font-bold mb-3">Our Services</h1>
+        <h1 className="text-3xl md:text-4xl font-bold mb-3">
+          Our Services
+        </h1>
         <p className="max-w-2xl mx-auto text-gray-200">
           Enjoy fast, reliable parcel delivery with real-time tracking and zero hassle.
           From personal packages to business shipments — we deliver on time, every time.
@@ -50,8 +53,12 @@ const OurServices = () => {
       {/* GRID */}
       <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
         {services.map((item, i) => (
-          <div
+          <motion.div
             key={i}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: i * 0.1 }}
+            viewport={{ once: true }}
             className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl 
                        transition duration-300 border border-gray-100 
                        flex flex-col items-center text-center h-[346px] hover:bg-[#CAEB66]"
@@ -63,7 +70,7 @@ const OurServices = () => {
             />
             <h2 className="text-lg font-semibold mb-2">{item.title}</h2>
             <p className="text-gray-600 text-sm">{item.desc}</p>
-          </div>
+          </motion.div>
         ))}
       </div>
     </section>
