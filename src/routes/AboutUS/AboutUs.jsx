@@ -1,138 +1,197 @@
-import React from "react";
+import React, { useState } from "react";
+import Box from "@mui/material/Box";
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
 
-const AboutPage = () => {
+const AboutUs = () => {
+  const [value, setValue] = useState("1");
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
-    <div className="bg-gray-50">
+    <div className="py-10 px-5 md:px-16 bg-gray-50 md:mt-10">
+      <h1 className="text-3xl md:text-4xl font-extrabold text-center 
+        bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        About Us
+      </h1>
 
-      {/* HERO SECTION */}
-      <section className="py-16 px-5 md:px-16">
-        <h1 className="text-center text-4xl md:text-5xl font-extrabold 
-          bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          About Our Company
-        </h1>
+      <p className="text-center text-gray-600 max-w-3xl mx-auto mt-3">
+        Enjoy fast, reliable parcel delivery with real-time tracking and zero hassle.  
+        From personal packages to business shipments — we deliver on time, every time.
+      </p>
 
-        <p className="text-center max-w-3xl mx-auto text-gray-600 mt-4 leading-7">
-          We are committed to providing fast, secure, and reliable parcel delivery
-          across the country. Our mission is to combine smart technology, trained
-          professionals, and a customer-first system that ensures every shipment is
-          delivered with care, accuracy, and transparency.
-        </p>
-      </section>
+      <div className="mt-10">
+        <Box
+          sx={{
+            width: "100%",
+            typography: "body1",
+            bgcolor: "white",
+            p: 2,
+            borderRadius: 2,
+            boxShadow: 3,
+          }}
+        >
+          <TabContext value={value}>
+            <Box
+              sx={{
+                borderBottom: 1,
+                borderColor: "divider",
+                bgcolor: "#f8fafc",
+                borderRadius: 1,
+              }}
+            >
+              <TabList
+                onChange={handleChange}
+                variant="scrollable"
+                scrollButtons
+                allowScrollButtonsMobile
+                aria-label="About Us Tabs"
+                textColor="primary"
+                indicatorColor="primary"
+              >
+                <Tab label="Story" value="1" sx={{ fontWeight: "bold" }} />
+                <Tab label="Mission" value="2" sx={{ fontWeight: "bold" }} />
+                <Tab label="Success" value="3" sx={{ fontWeight: "bold" }} />
+                <Tab label="Team & Others" value="4" sx={{ fontWeight: "bold" }} />
+              </TabList>
+            </Box>
 
-      {/* WHY CHOOSE US */}
-      <section className="py-12 bg-white px-5 md:px-16">
-        <h2 className="text-2xl md:text-3xl font-bold text-center text-blue-600">
-          Why Choose Us
-        </h2>
+            {/* ===================== STORY ====================== */}
+            <TabPanel value="1">
+              <h2 className="text-2xl font-semibold text-blue-600 mb-3">Our Story</h2>
 
-        <div className="grid md:grid-cols-3 gap-8 mt-10 max-w-6xl mx-auto">
-          {/* Card 1 */}
-          <div className="p-6 bg-gray-100 rounded-xl shadow hover:shadow-lg transition">
-            <h3 className="text-xl font-semibold text-blue-600 mb-2">Fast Delivery</h3>
-            <p className="text-gray-600 leading-7">
-              Our optimized delivery routes and smart logistics system ensure your
-              parcels reach their destination faster than traditional methods.
-            </p>
-          </div>
+              <p className="leading-7 text-gray-700 mb-4">
+                Our journey began with a simple observation — people were struggling 
+                to get their parcels delivered safely, quickly, and with transparency.
+                Traditional delivery systems were often slow, lacked proper tracking,
+                and caused unnecessary stress for customers. That’s when we decided
+                to create a delivery experience that puts customers first.
+              </p>
 
-          {/* Card 2 */}
-          <div className="p-6 bg-gray-100 rounded-xl shadow hover:shadow-lg transition">
-            <h3 className="text-xl font-semibold text-blue-600 mb-2">Secure Handling</h3>
-            <p className="text-gray-600 leading-7">
-              Every shipment is handled with care by trained professionals, ensuring
-              safety, security, and zero damage during transit.
-            </p>
-          </div>
+              <p className="leading-7 text-gray-700 mb-4">
+                Starting with just a few team members and a clear vision, we built a 
+                service that focuses on real-time tracking, trained riders, and 
+                customer support that actually listens. With every successful delivery,
+                our confidence grew, and so did the trust of our customers.
+              </p>
 
-          {/* Card 3 */}
-          <div className="p-6 bg-gray-100 rounded-xl shadow hover:shadow-lg transition">
-            <h3 className="text-xl font-semibold text-blue-600 mb-2">
-              Smart Technology
-            </h3>
-            <p className="text-gray-600 leading-7">
-              Our real-time tracking system keeps customers updated at every moment,
-              ensuring transparency and complete peace of mind.
-            </p>
-          </div>
-        </div>
-      </section>
+              <p className="leading-7 text-gray-700 mb-4">
+                Today, we serve thousands of customers every month—individuals,
+                online sellers, corporate companies, and growing businesses. What 
+                started as a dream has become a nationwide delivery network that 
+                continues to expand every year.
+              </p>
 
-      {/* OUR STORY */}
-      <section className="py-16 px-5 md:px-16 max-w-5xl mx-auto">
-        <h2 className="text-3xl font-bold text-blue-600 mb-6">Our Story</h2>
-        <p className="text-gray-700 leading-8 mb-5">
-          Our company started with a mission to transform Bangladesh’s delivery
-          experience. We noticed that traditional courier services often failed to
-          provide reliability, transparency, and timely delivery. From that point on,
-          we started building a modern, technology-driven delivery system that puts
-          customer experience at the center.
-        </p>
+              <p className="leading-7 text-gray-700">
+                Our story is still being written, and we are committed to shaping 
+                the future of smart logistics in Bangladesh through innovation,
+                dedication, and meaningful customer experience.
+              </p>
+            </TabPanel>
 
-        <p className="text-gray-700 leading-8 mb-5">
-          Day by day, with continuous improvement, smart planning, and customer
-          feedback, our operations grew stronger. Today, we proudly serve thousands of
-          users across multiple districts, ensuring seamless delivery with accuracy and
-          dedication.
-        </p>
+            {/* ===================== MISSION ====================== */}
+            <TabPanel value="2">
+              <h2 className="text-2xl font-semibold text-blue-600 mb-3">Our Mission</h2>
 
-        <p className="text-gray-700 leading-8">
-          Our story is still being written — with every parcel we deliver, every
-          milestone we achieve, and every customer we satisfy.
-        </p>
-      </section>
+              <p className="leading-7 text-gray-700 mb-4">
+                Our mission is to deliver peace of mind — not just parcels. 
+                We want every customer to feel confident knowing their package
+                is being handled with care, accuracy, and reliability.
+              </p>
 
-      {/* TEAM SECTION */}
-      <section className="bg-white py-16 px-5 md:px-16">
-        <h2 className="text-3xl font-bold text-blue-600 text-center">
-          Meet Our Team
-        </h2>
+              <p className="leading-7 text-gray-700 mb-4">
+                We aim to make delivery smarter through technology. That means
+                real-time tracking, automated notifications, verified riders,
+                and a secure logistics system that minimizes delays and errors.
+              </p>
 
-        <p className="text-gray-600 text-center max-w-3xl mx-auto mt-3">
-          Our dedicated riders, smart operations team, professional support staff, and
-          tech experts work tirelessly to ensure your deliveries are always on time.
-        </p>
+              <p className="leading-7 text-gray-700 mb-4">
+                Our mission also focuses on helping small businesses grow. We
+                provide flexible delivery solutions, easy COD handling, and
+                logistics support so entrepreneurs can run their business
+                without worrying about shipments.
+              </p>
 
-        <div className="grid md:grid-cols-3 gap-10 mt-12 max-w-6xl mx-auto">
+              <p className="leading-7 text-gray-700">
+                Ultimately, our goal is to build Bangladesh’s most trusted
+                delivery ecosystem — where speed, safety, and service quality
+                come together to create an exceptional experience for everyone.
+              </p>
+            </TabPanel>
 
-          <div className="p-6 bg-gray-100 rounded-lg shadow hover:shadow-xl transition">
-            <h3 className="text-xl font-bold text-blue-700">Operations Team</h3>
-            <p className="text-gray-600 leading-7 mt-2">
-              Coordinates routes, oversees shipments, and ensures smooth day-to-day
-              logistics across regions.
-            </p>
-          </div>
+            {/* ===================== SUCCESS ====================== */}
+            <TabPanel value="3">
+              <h2 className="text-2xl font-semibold text-blue-600 mb-3">Our Success</h2>
 
-          <div className="p-6 bg-gray-100 rounded-lg shadow hover:shadow-xl transition">
-            <h3 className="text-xl font-bold text-blue-700">Delivery Riders</h3>
-            <p className="text-gray-600 leading-7 mt-2">
-              Our trained riders work with responsibility and commitment to deliver
-              parcels safely and on time.
-            </p>
-          </div>
+              <p className="leading-7 text-gray-700 mb-4">
+                Our success is built on trust — the trust of customers who choose
+                us every day for their most important deliveries. From personal 
+                parcels to business shipments, we have consistently maintained a 
+                high delivery success rate that reflects our dedication.
+              </p>
 
-          <div className="p-6 bg-gray-100 rounded-lg shadow hover:shadow-xl transition">
-            <h3 className="text-xl font-bold text-blue-700">Tech & Support</h3>
-            <p className="text-gray-600 leading-7 mt-2">
-              Builds and maintains smart tools, tracking systems, and ensures 24/7
-              customer support excellence.
-            </p>
-          </div>
+              <p className="leading-7 text-gray-700 mb-4">
+                Over time, we have partnered with hundreds of e-commerce companies
+                and small businesses who rely on our delivery system to keep their
+                operations running smoothly. Their growth stories are also part of
+                our success.
+              </p>
 
-        </div>
-      </section>
+              <p className="leading-7 text-gray-700 mb-4">
+                One of our proudest achievements is creating a logistics network
+                that covers major cities, suburbs, and remote areas—ensuring fast 
+                and reliable delivery for everyone. Our investment in technology,
+                training, and infrastructure continues to pay off every day.
+              </p>
 
-      {/* FOOTER MESSAGE */}
-      <section className="py-12 text-center">
-        <h2 className="text-2xl font-semibold text-blue-600">
-          We Deliver Trust — Not Just Parcels
-        </h2>
-        <p className="text-gray-600 mt-3">
-          Thank you for choosing us as your delivery partner.
-        </p>
-      </section>
+              <p className="leading-7 text-gray-700">
+                But for us, success is not a destination — it is a journey that we
+                walk with our customers, employees, and partners. Each milestone
+                motivates us to aim higher and deliver even better.
+              </p>
+            </TabPanel>
 
+            {/* ===================== TEAM ====================== */}
+            <TabPanel value="4">
+              <h2 className="text-2xl font-semibold text-blue-600 mb-3">
+                Our Team & Values
+              </h2>
+
+              <p className="leading-7 text-gray-700 mb-4">
+                Behind every successful delivery is an entire team working 
+                passionately. Our riders, warehouse staff, customer care agents,
+                developers, logistics managers, and leadership team — all share
+                the same vision of providing top-quality service.
+              </p>
+
+              <p className="leading-7 text-gray-700 mb-4">
+                We believe in integrity, professionalism, and respect. Every team 
+                member is trained to handle parcels with care and treat customers
+                with kindness. Our work culture encourages learning, innovation,
+                and continuous improvement.
+              </p>
+
+              <p className="leading-7 text-gray-700 mb-4">
+                Our values go beyond business. We promote safety, sustainability,
+                and equal opportunities. We also invest in training programs,
+                rider support, and technology upgrades to ensure long-term growth.
+              </p>
+
+              <p className="leading-7 text-gray-700">
+                As we grow, our team grows with us — stronger, smarter, and more
+                dedicated to building a delivery service that truly makes a 
+                difference across the country.
+              </p>
+            </TabPanel>
+          </TabContext>
+        </Box>
+      </div>
     </div>
   );
 };
 
-export default AboutPage;
+export default AboutUs;
