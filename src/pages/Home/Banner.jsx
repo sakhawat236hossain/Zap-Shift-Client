@@ -13,8 +13,8 @@ const Banner = () => {
             showStatus={false}
             infiniteLoop
             autoPlay={true}
-            interval={3000}
-            className="max-w-[1200px] mt-2 mx-auto"
+            interval={2500}
+            className="max-w-[1400px] mt-2 mx-auto"
         >
             <div>
                 <img className="w-full" src={banner1} />

@@ -17,7 +17,7 @@ const NavBar = () => {
   return (
     <div className="
       navbar 
-      bg-white/90 
+      bg-gray-300
       backdrop-blur-md 
       shadow-lg 
       border-b 
@@ -26,6 +26,7 @@ const NavBar = () => {
       top-0 
       z-50 
       px-4 
+      rounded-2xl
       lg:px-6
     ">
 

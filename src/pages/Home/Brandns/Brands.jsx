@@ -26,7 +26,7 @@ const Brands = () => {
    <div>
     <h3 className='text-center font-bold text-2xl mt-5'>We've helped thousands of sales teams</h3>
        <Swiper
-      className='max-w-[1200px] mx-auto mt-10 mb-20'
+      className='max-w-[1400px] mx-auto mt-10 mb-20'
        slidesPerView={3}
 centeredSlides={true}
 grabCursor={true}
