@@ -1,8 +1,17 @@
 import React from "react";
 import Logo from "../../../Components/Logo/Logo";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
+import UseAuth from "../../../Hooks/UseAuth";
 
 const NavBar = () => {
+  const { user, logOutUser } = UseAuth();
+
+  const handleLogout = () => {
+    logOutUser()
+      .then(() => console.log("User logged out"))
+      .catch((error) => console.log(error.message));
+  };
+
   const links = (
     <>
       <li><NavLink to="" className="hover:text-blue-600">Services</NavLink></li>
@@ -15,20 +24,7 @@ const NavBar = () => {
   );
 
   return (
-    <div className="
-      navbar 
-      bg-gray-300
-      backdrop-blur-md 
-      shadow-lg 
-      border-b 
-      border-gray-200 
-      sticky 
-      top-0 
-      z-50 
-      px-4 
-      rounded-2xl
-      lg:px-6
-    ">
+    <div className="navbar bg-gray-300 backdrop-blur-md shadow-lg border-b border-gray-200 sticky top-0 z-50 px-4 rounded-2xl lg:px-6">
 
       {/* Left Section */}
       <div className="navbar-start">
@@ -49,9 +45,10 @@ const NavBar = () => {
           </ul>
         </div>
 
-        <a className="text-xl font-bold">
+        {/* Logo */}
+        <Link to="/" className="text-xl font-bold">
           <Logo />
-        </a>
+        </Link>
       </div>
 
       {/* Center Links */}
@@ -61,11 +58,21 @@ const NavBar = () => {
         </ul>
       </div>
 
-      {/* Right */}
-      <div className="navbar-end">
-        <a className="btn bg-blue-600 text-white px-5 hover:bg-blue-700 shadow-md rounded-xl">
-          Get Started
-        </a>
+      {/* Right Section */}
+      <div className="navbar-end gap-3">
+        {user ? (
+          <button onClick={handleLogout} className="btn btn-outline text-lg py-5 px-10 rounded-lg hover:bg-[#CAEB66] font-bold">
+            Logout
+          </button>
+        ) : (
+          <NavLink
+            to="/login"
+            className="btn btn-outline text-lg py-5 px-10 rounded-lg hover:bg-[#CAEB66] font-bold"
+          >
+            Login
+          </NavLink>
+        )}
+        <Link  to='/' className="btn btn-primary px-4 text-black py-5 text-lg rounded-lg">Be a rider</Link>
       </div>
 
     </div>
