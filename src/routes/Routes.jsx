@@ -7,6 +7,9 @@ import ErrorPage from "../pages/Error/ErrorPage";
 import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/AuthPges/Login/Login";
 import Register from "../pages/AuthPges/Register/Register";
+import Rider from "../pages/Rider/Rider";
+import PrivateRoute from "./PrivateRout/PrivateRoute";
+import SendParcel from "../pages/SendParcel/SendParcel";
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +30,15 @@ export const router = createBrowserRouter([
         path: "about-us",
         Component: AboutUs,
       },
+      {
+        path:"rider",
+        element:<PrivateRoute><Rider></Rider></PrivateRoute>
+      },
+      {
+        path: "Send-Parcel",
+        element: <PrivateRoute><SendParcel></SendParcel></PrivateRoute>,
+        loader: () => fetch("/serviceCenters.json").then((res) => res.json()),
+      }
     ],
   },
   {

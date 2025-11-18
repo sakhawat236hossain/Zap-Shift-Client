@@ -14,10 +14,10 @@ const NavBar = () => {
 
   const links = (
     <>
-      <li><NavLink to="" className="hover:text-blue-600">Services</NavLink></li>
+      <li><NavLink to="/" className="hover:text-blue-600">Home</NavLink></li>
       <li><NavLink to="/Coverage" className="hover:text-blue-600">Coverage</NavLink></li>
       <li><NavLink to="/about-us" className="hover:text-blue-600">About Us</NavLink></li>
-      <li><NavLink to="" className="hover:text-blue-600">Pricing</NavLink></li>
+      <li><NavLink to="/Send-Parcel" className="hover:text-blue-600">Send Parcel</NavLink></li>
       <li><NavLink to="" className="hover:text-blue-600">Blog</NavLink></li>
       <li><NavLink to="" className="hover:text-blue-600">Contact</NavLink></li>
     </>
@@ -72,7 +72,7 @@ const NavBar = () => {
             Login
           </NavLink>
         )}
-        <Link  to='/' className="btn btn-primary px-4 text-black py-5 text-lg rounded-lg">Be a rider</Link>
+        <Link  to='/rider' className="btn btn-primary px-4 text-black py-5 text-lg rounded-lg">Be a rider</Link>
       </div>
 
     </div>

@@ -1,18 +1,49 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import UseAuth from '../../../Hooks/UseAuth';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import SocialLogin from '../SocialLogin/SocialLogin';
+import axios from 'axios';
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { createUser } = UseAuth();
+    const { createUser,updateUserProfile } = UseAuth();
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const handleRegistRation = (data) => {
+        console.log(data);
+        const profileImage = data.photo[0];
         createUser(data.email, data.password)
             .then(result => {
-                console.log("User created:", result.user);
+                console.log("User created:", result.user,data.name);
+                const formData = new FormData();
+                formData.append('image', profileImage);
+                const image_URL_API=`https://api.imgbb.com/1/upload?expiration=600&key=${import.meta.env.VITE_IMGE_HOSTING_key}`;
+                axios.post(image_URL_API, formData)
+                .then(Res => {
+                    const imageURL = Res.data.data.display_url;
+                    console.log("Image uploaded:", imageURL);
+
+                    // update user profile 
+                    const updatedUserProfile ={
+                        displayName: data.name,
+                        photoURL: imageURL
+                    };
+                    updateUserProfile(updatedUserProfile)
+                    .then(() => {
+                        console.log("User profile updated");
+                        navigate(location?.state || '/');
+                    })
+                    .catch(profileError => {
+                        console.log("Profile update error:", profileError.message);
+                    });
+                     
+                })
+                .catch(imageError => {
+                    console.log("Image upload error:", imageError.message);
+                });
             })
             .catch(error => {
                 console.log(error.message);
@@ -31,6 +62,32 @@ const Register = () => {
 
                     <fieldset className="space-y-4">
 
+                        {/* Name*/}
+                        <div>
+                            <label className="block text-gray-700 font-semibold">Name</label>
+                            <input
+                                type="name"
+                                {...register('name', { required: true })}
+                                className="w-full input input-bordered"
+                                placeholder="your name"
+                            />
+                            {errors.name && (
+                                <span className='text-red-600 text-sm'>name is required</span>
+                            )}
+                        </div>
+                        {/* photo image*/}
+                        <div>
+                            <label className="block text-gray-700 font-semibold">Photo</label>
+                            <input
+                                type="file"
+                                {...register('photo', { required: true })}
+                                className="w-full file-input "
+                                placeholder="your photo"
+                            />
+                            {errors.photo && (
+                                <span className='text-red-600 text-sm'>photo is required</span>
+                            )}
+                        </div>
                         {/* Email */}
                         <div>
                             <label className="block text-gray-700 font-semibold">Email</label>
@@ -90,7 +147,11 @@ const Register = () => {
                 {/* Login Link (Button-er Niche) */}
                 <div className="text-center mt-4 text-sm">
                     Already have an account?{" "}
-                    <Link to="/login" className="link link-primary">
+                    <Link
+                     to="/login" 
+                     className="link link-primary"
+                     state={location.state}
+                     >
                         Login
                     </Link>
                 </div>
