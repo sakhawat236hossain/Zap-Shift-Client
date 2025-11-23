@@ -1,6 +1,6 @@
 import React, { use } from "react";
 import { useForm, useWatch } from "react-hook-form";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSEcure from "../../Hooks/useAxiosSecure";
 import UseAuth from "../../Hooks/UseAuth";
@@ -12,8 +12,10 @@ const SendParcel = () => {
     control,
     formState: { errors },
   } = useForm();
-  const axiosSecure =useAxiosSEcure()
-  const {user}=UseAuth()
+  const axiosSecure = useAxiosSEcure();
+  const { user } = UseAuth();
+  const navigate=useNavigate()
+
   const serviceCenters = useLoaderData();
   const regionsDuplicate = serviceCenters.map((c) => c.region);
 
@@ -28,57 +30,59 @@ const SendParcel = () => {
     return districts;
   };
 
- const handleSendParcel = (data) => {
-  console.log("Form Data:", data);
+  const handleSendParcel = (data) => {
+    console.log("Form Data:", data);
 
-  const isDocument = data.parcelType === "document"; // lowercase 'document' as in radio value
-  const isSameDistricts = data.senderDistricts === data.ReceiverDistricts;
-  const parcelWeight = parseFloat(data.parcelWeight) || 0; // ensure number
+    const isDocument = data.parcelType === "document"; // lowercase 'document' as in radio value
+    const isSameDistricts = data.senderDistricts === data.ReceiverDistricts;
+    const parcelWeight = parseFloat(data.parcelWeight) || 0; // ensure number
 
-  let cost = 0;
+    let cost = 0;
 
-  if (isDocument) {
-    // Document pricing
-    cost = isSameDistricts ? 60 : 80;
-  } else {
-    // Non-Document pricing
-    if (parcelWeight <= 3) {
-      cost = isSameDistricts ? 110 : 150;
+    if (isDocument) {
+      // Document pricing
+      cost = isSameDistricts ? 60 : 80;
     } else {
-      // Extra weight charges
-      const extraWeight = parcelWeight - 3;
-      if (isSameDistricts) {
-        cost = 110 + extraWeight * 40;
+      // Non-Document pricing
+      if (parcelWeight <= 3) {
+        cost = isSameDistricts ? 110 : 150;
       } else {
-        cost = 150 + extraWeight * 40 + 40; // +40 extra for outside city/district
+        // Extra weight charges
+        const extraWeight = parcelWeight - 3;
+        if (isSameDistricts) {
+          cost = 110 + extraWeight * 40;
+        } else {
+          cost = 150 + extraWeight * 40 + 40; // +40 extra for outside city/district
+        }
       }
     }
-  }
-
-Swal.fire({
-  title: "Agree with the cost?",
-  text: `You will be charged ${cost} Tk`,
-  icon: "warning",
-  showCancelButton: true,
-  confirmButtonColor: "#3085d6",
-  cancelButtonColor: "#d33",
-  confirmButtonText: "I agree"
-}).then((result) => {
-  if (result.isConfirmed) {
-    axiosSecure.post("/postParcel",data)
-    .then(res=>{
-      console.log("after saving parcel",res.data);
-    })
-    // Swal.fire({
-    //   title: "Confirmed!",
-    //   text: "Your parcel booking has been confirmed.",
-    //   icon: "success"
-    // });
-  }
-});
-
-};
-
+    ((data.cost = cost),
+      Swal.fire({
+        title: "Agree with the cost?",
+        text: `You will be charged ${cost} Tk`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "confirm and continue payment",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axiosSecure.post("/Parcel", data).then((res) => {
+            console.log("after saving parcel", res.data);
+            if (res.data.insertedId) {
+              navigate("/dashboard/my-parcels")
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "parcel has created. please pay",
+                showConfirmButton: false,
+                timer: 2500,
+              });
+            }
+          });
+        }
+      }));
+  };
 
   // UPDATED STYLES
   const labelStyle =

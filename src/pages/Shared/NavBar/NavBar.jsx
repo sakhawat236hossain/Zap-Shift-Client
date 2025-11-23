@@ -12,14 +12,26 @@ const NavBar = () => {
       .catch((error) => console.log(error.message));
   };
 
+  const activeLink = ({ isActive }) =>
+    isActive
+      ? "text-blue-600 font-bold border-b-2 border-blue-600"
+      : "hover:text-blue-600";
+
   const links = (
     <>
-      <li><NavLink to="/" className="hover:text-blue-600">Home</NavLink></li>
-      <li><NavLink to="/Coverage" className="hover:text-blue-600">Coverage</NavLink></li>
-      <li><NavLink to="/about-us" className="hover:text-blue-600">About Us</NavLink></li>
-      <li><NavLink to="/Send-Parcel" className="hover:text-blue-600">Send Parcel</NavLink></li>
-      <li><NavLink to="" className="hover:text-blue-600">Blog</NavLink></li>
-      <li><NavLink to="" className="hover:text-blue-600">Contact</NavLink></li>
+      <li><NavLink to="/" className={activeLink}>Home</NavLink></li>
+      <li><NavLink to="/Coverage" className={activeLink}>Coverage</NavLink></li>
+      <li><NavLink to="/about-us" className={activeLink}>About Us</NavLink></li>
+      <li><NavLink to="/Send-Parcel" className={activeLink}>Send Parcel</NavLink></li>
+      <li><NavLink to="/rider" className={activeLink}>Be A Rider</NavLink></li>
+
+      {user && (
+        <li>
+          <NavLink to="/dashboard/my-parcels" className={activeLink}>
+            My Parcels
+          </NavLink>
+        </li>
+      )}
     </>
   );
 
@@ -28,6 +40,7 @@ const NavBar = () => {
 
       {/* Left Section */}
       <div className="navbar-start">
+
         {/* Mobile Menu */}
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -46,9 +59,9 @@ const NavBar = () => {
         </div>
 
         {/* Logo */}
-        <Link to="/" className="text-xl font-bold">
+        <span className="text-xl font-bold">
           <Logo />
-        </Link>
+        </span>
       </div>
 
       {/* Center Links */}
@@ -61,18 +74,29 @@ const NavBar = () => {
       {/* Right Section */}
       <div className="navbar-end gap-3">
         {user ? (
-          <button onClick={handleLogout} className="btn btn-outline text-lg py-5 px-10 rounded-lg hover:bg-[#CAEB66] font-bold">
+          <button
+            onClick={handleLogout}
+            className="btn btn-outline text-lg py-3 px-7 rounded-lg hover:bg-[#CAEB66] font-bold">
             Logout
           </button>
         ) : (
           <NavLink
             to="/login"
-            className="btn btn-outline text-lg py-5 px-10 rounded-lg hover:bg-[#CAEB66] font-bold"
+            className={({ isActive }) =>
+              isActive
+                ? "btn btn-primary text-lg py-3 px-10 rounded-lg font-bold"
+                : "btn btn-outline text-lg py-3 px-10 rounded-lg hover:bg-[#CAEB66] font-bold"
+            }
           >
             Login
           </NavLink>
         )}
-        <Link  to='/rider' className="btn btn-primary px-4 text-black py-5 text-lg rounded-lg">Be a rider</Link>
+
+        <Link
+          to="/rider"
+          className="btn btn-primary px-4 text-black py-5 text-lg rounded-lg">
+          Be a rider
+        </Link>
       </div>
 
     </div>
