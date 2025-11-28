@@ -1,4 +1,4 @@
-import React, { use } from "react";
+import React, { use} from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
@@ -10,7 +10,7 @@ const SendParcel = () => {
     register,
     handleSubmit,
     control,
-    formState: { errors },
+  
   } = useForm();
   const axiosSecure = useAxiosSEcure();
   const { user } = UseAuth();
@@ -141,7 +141,7 @@ const SendParcel = () => {
           <div>
             <label className={labelStyle}>Parcel Weight (KG)</label>
             <input
-              de
+              
               type="number"
               className={inputStyle}
               {...register("parcelWeight")}

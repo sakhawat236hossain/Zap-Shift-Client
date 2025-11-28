@@ -1,8 +1,14 @@
 import React from "react";
-import { FaBox, FaCreditCard, FaMotorcycle } from "react-icons/fa";
+import { FaBox, FaCreditCard, FaMotorcycle, FaTasks, FaTheaterMasks } from "react-icons/fa";
+import { SiGoogletasks } from "react-icons/si";
+import { RiEBikeFill } from "react-icons/ri";
+import { FaUsersViewfinder } from "react-icons/fa6";
 import { Link, NavLink, Outlet } from "react-router-dom";
+import UseRole from "../Hooks/UseRole";
 
 const DashboardLayout = () => {
+  const { role } = UseRole();
+
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -88,21 +94,86 @@ const DashboardLayout = () => {
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Payment History"
               >
-                <FaCreditCard  />
+                <FaCreditCard />
                 <span className="is-drawer-close:hidden">Payment History</span>
               </NavLink>
             </li>
-            {/* approve riders */}
-            <li>
-              <NavLink
-                to="/dashboard/approve-riders"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Approve Riders"
-              >
-                <FaMotorcycle />
-                <span className="is-drawer-close:hidden">Approve Riders</span>
-              </NavLink>
-            </li>
+
+            {/* Riders only Links */}
+            {role === "rider" && (
+              <>
+                <li>
+                  <NavLink
+                    to="/dashboard/assign-Deliveries"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Assign-Deliveries"
+                  >
+                    <FaTasks/>
+                    <span className="is-drawer-close:hidden">
+                      Assign Deliveries
+                    </span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/dashboard/completed-Deliveries"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="completed-Deliveries"
+                  >
+                    <SiGoogletasks />
+                    <span className="is-drawer-close:hidden">
+                     completed Deliveries
+                    </span>
+                  </NavLink>
+                </li>
+              </>
+            )}
+
+            {/* admin only Links */}
+            {role === "admin" && (
+              <>
+                {/* approve riders */}
+                <li>
+                  <NavLink
+                    to="/dashboard/approve-riders"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="Approve Riders"
+                  >
+                    <FaMotorcycle />
+                    <span className="is-drawer-close:hidden">
+                      Approve Riders
+                    </span>
+                  </NavLink>
+                </li>
+                {/* assign riders */}
+                <li>
+                  <NavLink
+                    to="/dashboard/assign-riders"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="assign Riders"
+                  >
+                    <RiEBikeFill />
+                    <span className="is-drawer-close:hidden">
+                      assign Riders
+                    </span>
+                  </NavLink>
+                </li>
+
+                {/* approve riders */}
+                <li>
+                  <NavLink
+                    to="/dashboard/users-management"
+                    className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                    data-tip="users management"
+                  >
+                    <FaUsersViewfinder />
+                    <span className="is-drawer-close:hidden">
+                      Approve Riders
+                    </span>
+                  </NavLink>
+                </li>
+              </>
+            )}
 
             {/* List item */}
             <li>

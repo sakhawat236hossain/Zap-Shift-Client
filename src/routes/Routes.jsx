@@ -16,7 +16,14 @@ import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentSuccessFull from "../pages/Dashboard/Payment/PaymentSuccessFull";
 import PaymentCancelled from "../pages/Dashboard/Payment/PaymentCancelled";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
-import approveRiders from "../pages/Dashboard/approveRiders/approveRiders";
+import UsersManagement from "../pages/Dashboard/UsersManagement/UsersManagement";
+import AdminRoute from "./AdminRoute/AdminRoute";
+import ApproveRiders from "../pages/Dashboard/approveRiders/approveRiders";
+import AssignRiders from "../pages/Dashboard/AssignRiders/assignRiders";
+import RidersRoute from "./RidersRoutes/RidersRoute";
+import AssignDeliveries from "../pages/Dashboard/AssignDeliveries/AssignDeliveries";
+import CompletedDeliveries from "../pages/Dashboard/CompletedDeliveries/CompletedDeliveries";
+import ParcelTrack from "../pages/ParcelTrack/ParcelTrack";
 
 export const router = createBrowserRouter([
   {
@@ -45,6 +52,10 @@ export const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: () => fetch("/serviceCenters.json").then((res) => res.json()),
+      },
+      {
+        path: "parcelTrack/:trackingId",
+        Component:ParcelTrack,
       },
       {
         path: "Send-Parcel",
@@ -100,10 +111,45 @@ export const router = createBrowserRouter([
         path: "payment-cancelled",
         Component: PaymentCancelled,
       },
+      // admin related routes
       {
-        path:"approve-riders",
-        Component:approveRiders,
-      }
+        path: "approve-riders",
+        element: (
+          <AdminRoute>
+            <ApproveRiders></ApproveRiders>
+          </AdminRoute>
+        ),
+      },
+
+      {
+        path: "users-management",
+        element: (
+          <AdminRoute>
+            <UsersManagement></UsersManagement>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "assign-riders",
+        element: <AssignRiders></AssignRiders>,
+      },
+      //  riders related only routes
+      {
+        path: "assign-Deliveries",
+        element: (
+          <RidersRoute>
+            <AssignDeliveries></AssignDeliveries>
+          </RidersRoute>
+        ),
+      },
+      {
+        path: "completed-Deliveries",
+        element: (
+          <RidersRoute>
+            <CompletedDeliveries></CompletedDeliveries>
+          </RidersRoute>
+        ),
+      },
     ],
   },
 ]);

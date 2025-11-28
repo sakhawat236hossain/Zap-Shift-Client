@@ -1,61 +1,55 @@
-import { useQuery } from '@tanstack/react-query';
-import React from 'react';
-import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+import { useQuery } from "@tanstack/react-query";
+import React from "react";
+import useAxiosSecure from "../../../Hooks/useAxiosSecure";
 import { FaUserCheck, FaTrashCan } from "react-icons/fa6";
 import { IoPersonRemoveSharp } from "react-icons/io5";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 const ApproveRiders = () => {
   const axiosSecure = useAxiosSecure();
 
   const { data: riders = [], refetch } = useQuery({
-    queryKey: ['riders', 'pending'],
+    queryKey: ["riders", "pending"],
     queryFn: async () => {
       const res = await axiosSecure.get("/riders");
       return res.data;
-    }
+    },
   });
 
- 
+  const updateRidesStatus = (rider, status) => {
+    const updateInfo = {status:status,email:rider.riderEmail}
 
-const updateRidesStatus = (rider, status) => {
-  const updateInfo = { 
-    status: status, 
-    email: rider.riderEmail   // ✔ FIXED
+    axiosSecure.patch(`/riders/${rider._id}`, updateInfo)
+      .then((res) => {
+        if (res.data.modifiedCount) {
+           refetch();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `Rider status updated to ${status}!`,
+            showConfirmButton: false,
+            timer: 2000,
+          });
+
+         
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
-  axiosSecure.patch(`/riders/${rider._id}`, updateInfo)
-    .then(res => {
-      if (res.data.modifiedCount > 0) {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: `Rider status updated to ${status}!`,
-          showConfirmButton: false,
-          timer: 2000,
-        });
+  const handleApproval = (rider) => {
+    updateRidesStatus(rider, "approved");
+  };
 
-        refetch();
-      }
-    })
-    .catch(err => console.log(err));
-};
-
-
-const handleApproval = (rider) => {
-  updateRidesStatus(rider, "approved");
-};
-
-const handleRejection = (rider) => {
-  updateRidesStatus(rider, "rejected");
-};
-
+  const handleRejection = (rider) => {
+    updateRidesStatus(rider, "rejected");
+  };
 
   return (
     <div className="p-6">
       <div className="bg-white shadow-lg rounded-xl p-6 border">
         <h2 className="text-3xl font-semibold text-gray-800 mb-6">
-          🚴 Riders Pending Approval 
+          🚴 Riders Pending Approval
           <span className="text-blue-600"> ({riders.length})</span>
         </h2>
 
@@ -67,8 +61,8 @@ const handleRejection = (rider) => {
                 <th>Name</th>
                 <th>Email</th>
                 <th>District</th>
-                <th>Contact</th>
-                <th>Status</th>
+                <th>Work status</th>
+                <th>Application Status</th>
                 <th className="text-center">Actions</th>
               </tr>
             </thead>
@@ -80,25 +74,23 @@ const handleRejection = (rider) => {
                   <td>{rider.riderName}</td>
                   <td>{rider.riderEmail}</td>
                   <td>{rider.districts}</td>
-                  <td>{rider.riderContact}</td>
-<td>
-  <span
-    className={
-      rider.status === "approved"
-        ? "badge badge-success"
-        : rider.status === "rejected"
-        ? "badge badge-error"
-        : "badge badge-warning"
-    }
-  >
-    {rider.status}
-  </span>
-</td>
-
+                  <td>{rider.worksStatus}</td>
+                  <td>
+                    <span
+                      className={
+                        rider.status === "approved"
+                          ? "badge badge-success"
+                          : rider.status === "rejected"
+                            ? "badge badge-error"
+                            : "badge badge-warning"
+                      }
+                    >
+                      {rider.status}
+                    </span>
+                  </td>
 
                   <td>
                     <div className="flex gap-2 justify-center">
-
                       {/* Approve */}
                       <button
                         onClick={() => handleApproval(rider)}
@@ -108,22 +100,22 @@ const handleRejection = (rider) => {
                       </button>
 
                       {/* Reject */}
-                      <button onClick={()=>handleRejection(rider)} className="btn btn-sm bg-yellow-500 text-white hover:bg-yellow-600 rounded-md">
+                      <button
+                        onClick={() => handleRejection(rider)}
+                        className="btn btn-sm bg-yellow-500 text-white hover:bg-yellow-600 rounded-md"
+                      >
                         <IoPersonRemoveSharp size={16} />
                       </button>
 
-                      {/* Remove */}
+                      {/* Remove
                       <button className="btn btn-sm bg-red-600 text-white hover:bg-red-700 rounded-md">
                         <FaTrashCan size={16} />
-                      </button>
-
+                      </button> */}
                     </div>
                   </td>
-
                 </tr>
               ))}
             </tbody>
-
           </table>
         </div>
       </div>
